@@ -1,4 +1,5 @@
 const { GraphQLServer } = require('graphql-yoga')
+const winston = require('winston')
 
 const resolvers = require('./resolvers')
 
@@ -9,5 +10,5 @@ const server = new GraphQLServer({
 })
 
 server.start(() =>
-  console.log(`The server is running on http://localhost:4000`)
+  winston.info(`The server is running on http://localhost:4000`)
 )

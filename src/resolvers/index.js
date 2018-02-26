@@ -1,5 +1,6 @@
 const fetch = require('node-fetch')
 const { GraphQLDateTime } = require('graphql-iso-date')
+const winston = require('winston')
 
 const User = require('./User')
 const Dispute = require('./Dispute')
@@ -36,18 +37,17 @@ const resolvers = {
         if (result.error) {
           throw new Error(result.error.message || 'Server error')
         }
-        console.log('result', result)
         return result.data
       } catch (error) {
         throw error
       }
     },
-    disputes: async (parent, { creatorId, pagination }, { accessToken }) => {
+    disputes: async (parent, { pagination, creatorId }, { accessToken }) => {
       let url = `${baseUrl}/disputes/?start=${pagination.start}&limit=${
         pagination.limit
       }`
       if (creatorId) {
-        url += `&initiatorId=${creatorId}`
+        url += `&userId=${creatorId}`
       }
       try {
         const response = await fetch(url, {
@@ -62,25 +62,34 @@ const resolvers = {
         throw error
       }
     },
-    answers: async (parent, { creatorId, pagination }, { accessToken }) => []
-    // let url = `${baseUrl}/disputes/?start=${pagination.start}&limit=${
-    //   pagination.limit
-    // }`
-    // if (creatorId) {
-    //   url += `&responderId=${creatorId}`
-    // }
-    // try {
-    //   const response = await fetch(url, {
-    //     headers: { Authorization: accessToken }
-    //   })
-    //   const result = await response.json()
-    //   if (result.error) {
-    //     throw new Error(result.error.message || 'Server error')
-    //   }
-    //   return result.data
-    // } catch (error) {
-    //   throw error
-    // }
+    answers: async (parent, { pagination, creatorId }, { accessToken }) => {
+      let url = `${baseUrl}/disputes/?start=${pagination.start}&limit=${
+        pagination.limit
+      }`
+      if (creatorId) {
+        url += `&responderId=${creatorId}`
+      }
+      try {
+        const response = await fetch(url, {
+          headers: { Authorization: accessToken }
+        })
+        const result = await response.json()
+        if (result.error) {
+          throw new Error(result.error.message || 'Server error')
+        }
+        winston.info('result', JSON.stringify(result, null, 2))
+        return result.data.reduce((answers, dispute) => {
+          if (!dispute.responses) {
+            winston.info('wtf dispute', dispute.id)
+            return answers
+          }
+          answers.push(...dispute.responses)
+          return answers
+        }, [])
+      } catch (error) {
+        throw error
+      }
+    }
   },
   Mutation: {
     sendPinCode: async (parent, { phone }) => {
@@ -144,7 +153,26 @@ const resolvers = {
         throw error
       }
     },
-
+    confirmDispute: async (parent, { id, confirmation }, { accessToken }) => {
+      try {
+        const response = await fetch(`${baseUrl}/confirm/dispute`, {
+          method: 'POST',
+          body: JSON.stringify({ id, confirmation }),
+          headers: {
+            Authorization: accessToken,
+            'Content-Type': 'application/json'
+          }
+        })
+        const result = await response.json()
+        if (result.error) {
+          winston.error(result.error.message, result)
+          throw new Error(result.error.message || 'Server error')
+        }
+        return result.data
+      } catch (error) {
+        throw error
+      }
+    },
     deleteDispute: async (parent, { id }, { accessToken }) => {
       try {
         const response = await fetch(`${baseUrl}/disputes?id=${id}`, {
@@ -179,6 +207,26 @@ const resolvers = {
         })
         const result = await response.json()
         if (result.error) {
+          throw new Error(result.error.message || 'Server error')
+        }
+        return result.data
+      } catch (error) {
+        throw error
+      }
+    },
+    confirmAnswer: async (parent, { id, confirmation }, { accessToken }) => {
+      try {
+        const response = await fetch(`${baseUrl}/confirm/response`, {
+          method: 'POST',
+          body: JSON.stringify({ id, confirmation }),
+          headers: {
+            Authorization: accessToken,
+            'Content-Type': 'application/json'
+          }
+        })
+        const result = await response.json()
+        if (result.error) {
+          winston.error(result.error.message, result)
           throw new Error(result.error.message || 'Server error')
         }
         return result.data

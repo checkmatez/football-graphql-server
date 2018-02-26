@@ -1,16 +1,27 @@
 type Query {
+  "Информация о текущем авторизованном пользователе. Должен быть указан header 'Authorization' со значением - токеном доступа."
   me: User!
-  dispute(id: ID): Dispute!
-  disputes(creatorId: ID, pagination: Pagination): [Dispute!]!
-  answers(creatorId: ID, pagination: Pagination): [Answer!]!
+  "Получить спор по id."
+  dispute(id: ID!): Dispute!
+  disputes(pagination: Pagination!, creatorId: ID): [Dispute!]!
+  answers(pagination: Pagination!, creatorId: ID): [Answer!]!
 }
 
 type Mutation {
+  "Отправить ПИН код на указанный номер. Если пользователя с номером еще нет в базе, он будет создан."
   sendPinCode(phone: String!): Int
+  "Подтвердить получение ранее отправленного ПИН кода и авторизоваться."
   loginByPin(phone: String!, pinCode: Int!): AuthPayload
+  "Создать спор."
   createDispute(matchId: ID!, text: String!, amount: Int!): Dispute
+  "Принять решение об исходе своего (походу и чужого тоже =)) спора."
+  confirmDispute(id: ID!, confirmation: DisputeConfirmation!): Dispute
+  "Удалить спор."
   deleteDispute(id: ID!): Dispute
+  "Создать ответ на спор."
   createAnswer(disputeId: ID!, comment: String!, amount: Int!): Answer
+  "Принять решение об исходе своего ответа на спор."
+  confirmAnswer(id: ID!, confirmation: AnswerState!): Answer
 }
 
 scalar DateTime
@@ -21,10 +32,13 @@ enum OperationResult {
 }
 
 input Pagination {
+  "Указатель на запись начиная с которой осуществляется выборка."
   start: Int!
+  "Количество возвращаемых записей."
   limit: Int!
 }
 
+"Тип Пользователь. Моделирует данные о конкретном пользователе системы."
 type User {
   id: ID!
   username: String
@@ -48,6 +62,7 @@ type AuthPayload {
   currentUser: User!
 }
 
+"Тип Спор. Моделирует спор пользователя об исходе некоторого события в рамках конкретного матча."
 type Dispute {
   id: ID!
   createdAt: DateTime!
@@ -64,24 +79,24 @@ type Dispute {
 
 enum DisputeState {
   ACTIVE
-  LOCKED
   FINISHED
-  DELETED
+  LOCKED
   ARCHIVED
+  DELETED
 }
 
 enum DisputeResult {
+  WAITING
+  MODERATION
   WIN
   LOSS
   CANCELLED
-  MODERATION
-  WAITING
 }
 
 enum DisputeConfirmation {
+  WAITING
   WIN
   LOSS
-  WAITING
 }
 
 type Match {
@@ -117,6 +132,7 @@ enum League {
   FNL
 }
 
+"Тип Ответ. Моделирует ответную ставку пользователя на спор другого пользователя."
 type Answer {
   id: ID!
   createdAt: DateTime!
@@ -125,13 +141,13 @@ type Answer {
   state: AnswerState!
   amount: Int!
   comment: String!
-  "Какая-то херня с нашего сервера. Нам не нужно, но пока оставил это поле."
+  "Какая-то херня с нашего сервера. Нам скорее всего не нужно, но пока оставил это поле."
   side: Int!
 }
 
 enum AnswerState {
-  ACTIVE
   WAITING
+  ACTIVE
   WIN
   LOSS
 }
