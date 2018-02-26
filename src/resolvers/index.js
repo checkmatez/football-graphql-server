@@ -16,7 +16,7 @@ const resolvers = {
     me: async (parent, args, { accessToken }) => {
       try {
         const response = await fetch(`${baseUrl}/users/me`, {
-          headers: { Authorization: accessToken },
+          headers: { Authorization: accessToken }
         })
         const result = await response.json()
         if (result.error) {
@@ -29,8 +29,8 @@ const resolvers = {
     },
     dispute: async (parent, { id }, { accessToken }) => {
       try {
-        const response = await fetch(`${baseUrl}/disputes/${id}`, {
-          headers: { Authorization: accessToken },
+        const response = await fetch(`${baseUrl}/disputes/?id=${id}`, {
+          headers: { Authorization: accessToken }
         })
         const result = await response.json()
         if (result.error) {
@@ -51,7 +51,7 @@ const resolvers = {
       }
       try {
         const response = await fetch(url, {
-          headers: { Authorization: accessToken },
+          headers: { Authorization: accessToken }
         })
         const result = await response.json()
         if (result.error) {
@@ -62,26 +62,25 @@ const resolvers = {
         throw error
       }
     },
-    answers: async (parent, { creatorId, pagination }, { accessToken }) => {
-      let url = `${baseUrl}/disputes/?start=${pagination.start}&limit=${
-        pagination.limit
-      }`
-      if (creatorId) {
-        url += `&responderId=${creatorId}`
-      }
-      try {
-        const response = await fetch(url, {
-          headers: { Authorization: accessToken },
-        })
-        const result = await response.json()
-        if (result.error) {
-          throw new Error(result.error.message || 'Server error')
-        }
-        return result.data
-      } catch (error) {
-        throw error
-      }
-    },
+    answers: async (parent, { creatorId, pagination }, { accessToken }) => []
+    // let url = `${baseUrl}/disputes/?start=${pagination.start}&limit=${
+    //   pagination.limit
+    // }`
+    // if (creatorId) {
+    //   url += `&responderId=${creatorId}`
+    // }
+    // try {
+    //   const response = await fetch(url, {
+    //     headers: { Authorization: accessToken }
+    //   })
+    //   const result = await response.json()
+    //   if (result.error) {
+    //     throw new Error(result.error.message || 'Server error')
+    //   }
+    //   return result.data
+    // } catch (error) {
+    //   throw error
+    // }
   },
   Mutation: {
     sendPinCode: async (parent, { phone }) => {
@@ -89,7 +88,7 @@ const resolvers = {
         const response = await fetch(`${baseUrl}/auth`, {
           method: 'POST',
           body: JSON.stringify({ username: phone, key: API_KEY }),
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json' }
         })
         const result = await response.json()
         if (result.error) {
@@ -106,9 +105,9 @@ const resolvers = {
           method: 'POST',
           body: JSON.stringify({
             username: phone,
-            password: `${pinCode}`,
+            password: `${pinCode}`
           }),
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json' }
         })
         const result = await response.json()
         if (result.error) {
@@ -116,7 +115,7 @@ const resolvers = {
         }
         return {
           accessToken: result.data.accessToken,
-          currentUser: result.data.user,
+          currentUser: result.data.user
         }
       } catch (error) {
         throw error
@@ -133,8 +132,8 @@ const resolvers = {
           body: JSON.stringify({ matchId, text, amount }),
           headers: {
             Authorization: accessToken,
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         })
         const result = await response.json()
         if (result.error) {
@@ -152,8 +151,8 @@ const resolvers = {
           method: 'DELETE',
           headers: {
             Authorization: accessToken,
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         })
         const result = await response.json()
         if (result.error) {
@@ -175,8 +174,8 @@ const resolvers = {
           body: JSON.stringify({ disputeId, comment, amount }),
           headers: {
             Authorization: accessToken,
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         })
         const result = await response.json()
         if (result.error) {
@@ -186,14 +185,14 @@ const resolvers = {
       } catch (error) {
         throw error
       }
-    },
+    }
   },
   DateTime: GraphQLDateTime,
   User,
   Dispute,
   Match,
   Team,
-  Answer,
+  Answer
 }
 
 module.exports = resolvers

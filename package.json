@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon src/index.js",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "format":
+      "prettier src/**/*.{js,jsx,json,css} --config ./.prettierrc --write"
   },
   "dependencies": {
     "graphql-iso-date": "^3.5.0",

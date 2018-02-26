@@ -8,5 +8,5 @@ module.exports = {
   confirmation: ({ confirmation }) =>
     confirmation ? confirmation.toUpperCase() : null,
   creator: ({ user }) => user,
-  answers: ({ responses }) => responses || []
+  answers: ({ responses }) => responses || [],
 }

@@ -2,7 +2,7 @@ type Query {
   me: User!
   dispute(id: ID): Dispute!
   disputes(creatorId: ID, pagination: Pagination): [Dispute!]!
-  answers(creatorId: ID, pagination: Pagination): [Dispute!]!
+  answers(creatorId: ID, pagination: Pagination): [Answer!]!
 }
 
 type Mutation {
@@ -111,7 +111,7 @@ enum League {
 
 type Answer {
   id: ID!
-  # dispute: Dispute!
+  dispute: Dispute!
   creator: User!
   state: AnswerState!
   amount: Int!
