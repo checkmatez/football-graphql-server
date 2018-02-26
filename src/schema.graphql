@@ -93,6 +93,14 @@ type Match {
   team1: Team!
   team2: Team!
   startedAt: DateTime
+  result: String!
+  state: MatchState!
+}
+
+enum MatchState {
+  WAITING
+  ACTIVE
+  FINISHED
 }
 
 type Team {
@@ -111,11 +119,13 @@ enum League {
 
 type Answer {
   id: ID!
+  createdAt: DateTime!
   dispute: Dispute!
   creator: User!
   state: AnswerState!
   amount: Int!
   comment: String!
+  "Какая-то херня с нашего сервера. Нам не нужно, но пока оставил это поле."
   side: Int!
 }
 
