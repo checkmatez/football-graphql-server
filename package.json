@@ -4,9 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js --ext js,graphql",
     "lint": "eslint src",
-    "format": "prettier src/**/*.{js,jsx,json,css} --config ./.prettierrc --write"
+    "format":
+      "prettier src/**/*.{js,jsx,json,css} --config ./.prettierrc --write"
   },
   "dependencies": {
     "graphql-iso-date": "^3.5.0",
