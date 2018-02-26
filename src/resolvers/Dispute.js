@@ -7,10 +7,6 @@ module.exports = {
   result: ({ result }) => (result ? result.toUpperCase() : null),
   confirmation: ({ confirmation }) =>
     confirmation ? confirmation.toUpperCase() : null,
-  creator: ({ user }) => {
-    return user
-  },
-  answers: ({ responses }) => {
-    return responses || []
-  },
+  creator: ({ user }) => user,
+  answers: ({ responses }) => responses || []
 }

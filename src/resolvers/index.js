@@ -36,6 +36,7 @@ const resolvers = {
         if (result.error) {
           throw new Error(result.error.message || 'Server error')
         }
+        console.log('result', result)
         return result.data
       } catch (error) {
         throw error
@@ -76,7 +77,6 @@ const resolvers = {
         if (result.error) {
           throw new Error(result.error.message || 'Server error')
         }
-        console.log(result)
         return result.data
       } catch (error) {
         throw error
@@ -182,7 +182,6 @@ const resolvers = {
         if (result.error) {
           throw new Error(result.error.message || 'Server error')
         }
-        console.log('answer', result)
         return result.data
       } catch (error) {
         throw error
