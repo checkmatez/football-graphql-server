@@ -41,6 +41,7 @@ input Pagination {
 "Тип Пользователь. Моделирует данные о конкретном пользователе системы."
 type User {
   id: ID!
+  "При авторизации по телефону username это телефон. При авторизации через соцсети - это ник пользователя."
   username: String
   firstName: String!
   lastName: String!
