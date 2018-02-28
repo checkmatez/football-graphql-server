@@ -9,7 +9,11 @@ type Query {
   me: User!
   "Получить спор по id."
   dispute(id: ID!): Dispute!
-  disputes(pagination: Pagination!, creatorId: ID): [Dispute!]!
+  disputes(
+    pagination: Pagination!
+    creatorId: ID
+    states: [DisputeState!]
+  ): [Dispute!]!
   answer(id: ID!): Answer!
   answers(
     pagination: Pagination!
