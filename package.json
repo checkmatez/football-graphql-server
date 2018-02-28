@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node ./index.js",
-    "dev": "nodemon ./src/index.js --ext js,graphql",
+    "start": "node index.js",
+    "dev": "nodemon index.js --ext js,graphql",
     "lint": "eslint src",
     "format":
       "prettier src/**/*.{js,jsx,json,css} --config ./.prettierrc --write"
