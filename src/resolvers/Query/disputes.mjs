@@ -1,8 +1,8 @@
-const fetch = require('node-fetch')
-const querystring = require('querystring')
-const winston = require('winston')
+import fetch from 'node-fetch'
+import querystring from 'querystring'
+import winston from 'winston'
 
-const { BASE_URL } = require('../../constants')
+import { BASE_URL } from '../../constants.mjs'
 
 const disputes = async (parent, { pagination, creatorId }, { accessToken }) => {
   const params = querystring.stringify({
@@ -25,4 +25,4 @@ const disputes = async (parent, { pagination, creatorId }, { accessToken }) => {
   }
 }
 
-module.exports = disputes
+export default disputes

@@ -5,4 +5,4 @@ const User = {
   avatar600: ({ avatar }) => (avatar ? avatar[600] : null),
 }
 
-module.exports = User
+export default User

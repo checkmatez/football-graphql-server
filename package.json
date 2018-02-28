@@ -1,13 +1,17 @@
 {
   "name": "football-graphql-server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.mjs",
   "license": "MIT",
+  "engines": {
+    "node": ">=8.5.0"
+  },
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js --ext js,graphql",
+    "start": "node --experimental-modules index.mjs",
+    "dev": "nodemon --experimental-modules index.mjs --ext js,mjs,graphql",
     "lint": "eslint src",
-    "format": "prettier src/**/*.{js,jsx,json,css} --config ./.prettierrc --write"
+    "format":
+      "prettier src/**/*.{js,mjs,json,css} --config ./.prettierrc --write"
   },
   "dependencies": {
     "graphql-import": "^0.4.5",
@@ -30,11 +34,11 @@
     "prettier": "^1.10.2"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": [
+    "src/**/*.{js,mjs,json,css}": [
       "prettier --config ./.prettierrc --write",
       "git add"
     ],
-    "*.{js,jsx,json,css}": [
+    "*.{js,mjs,json,css}": [
       "prettier --config ./.prettierrc --write",
       "git add"
     ]

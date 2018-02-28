@@ -1,9 +1,9 @@
-const { IMAGES_HOST } = require('../constants')
+import { IMAGES_HOST } from '../constants.mjs'
 
 const Team = {
   id: ({ championatId }) => championatId,
   league: ({ leagueName }) => leagueName.toUpperCase(),
-  logo: ({ logo }) => `${IMAGES_HOST}${logo}`,
+  logo: ({ logo }) => `${IMAGES_HOST}${logo}`
 }
 
-module.exports = Team
+export default Team

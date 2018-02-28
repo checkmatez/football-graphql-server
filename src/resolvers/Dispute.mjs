@@ -1,8 +1,8 @@
-const fetch = require('node-fetch')
-const querystring = require('querystring')
-const winston = require('winston')
+import fetch from 'node-fetch'
+import querystring from 'querystring'
+import winston from 'winston'
 
-const { BASE_URL } = require('../constants')
+import { BASE_URL } from '../constants.mjs'
 
 const Dispute = {
   createdAt: ({ createdAt }) =>
@@ -23,7 +23,6 @@ const Dispute = {
       championatId: matchId
     })
     const url = `${BASE_URL}/matches?${params}`
-    winston.info('url', url)
     try {
       const response = await fetch(url, {
         headers: { Authorization: accessToken }
@@ -32,7 +31,6 @@ const Dispute = {
       if (result.error) {
         throw new Error(result.error.message || 'Server error')
       }
-      winston.info('result', JSON.stringify(result, null, 2))
       return result.data.find(m => m.championatId === matchId)
     } catch (error) {
       throw error
@@ -40,4 +38,4 @@ const Dispute = {
   }
 }
 
-module.exports = Dispute
+export default Dispute

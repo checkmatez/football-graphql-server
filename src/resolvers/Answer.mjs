@@ -5,4 +5,4 @@ const Answer = {
   creator: ({ user }) => user,
 }
 
-module.exports = Answer
+export default Answer

@@ -1,8 +1,8 @@
-const fetch = require('node-fetch')
-const querystring = require('querystring')
-const winston = require('winston')
+import fetch from 'node-fetch'
+import querystring from 'querystring'
+import winston from 'winston'
 
-const { BASE_URL } = require('../../constants')
+import { BASE_URL } from '../../constants.mjs'
 
 const answer = async (parent, { id }, { accessToken }) => {
   try {
@@ -20,4 +20,4 @@ const answer = async (parent, { id }, { accessToken }) => {
   }
 }
 
-module.exports = answer
+export default answer

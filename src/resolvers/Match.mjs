@@ -5,4 +5,4 @@ const Match = {
   state: ({ state }) => state.toUpperCase(),
 }
 
-module.exports = Match
+export default Match

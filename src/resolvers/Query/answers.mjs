@@ -1,8 +1,8 @@
-const fetch = require('node-fetch')
-const querystring = require('querystring')
-const winston = require('winston')
+import fetch from 'node-fetch'
+import querystring from 'querystring'
+import winston from 'winston'
 
-const { BASE_URL } = require('../../constants')
+import { BASE_URL } from '../../constants.mjs'
 
 const answers = async (
   parent,
@@ -16,7 +16,6 @@ const answers = async (
     ...(states && { states: states.join(',').toLowerCase() })
   })
   const url = `${BASE_URL}/responses?${params}`
-  winston.info('url', url)
   try {
     const response = await fetch(url, {
       headers: { Authorization: accessToken }
@@ -25,11 +24,10 @@ const answers = async (
     if (result.error) {
       throw new Error(result.error.message || 'Server error')
     }
-    winston.info('result', result.data.length)
     return result.data
   } catch (error) {
     throw error
   }
 }
 
-module.exports = answers
+export default answers

@@ -1,7 +1,7 @@
-const fetch = require('node-fetch')
-const winston = require('winston')
+import fetch from 'node-fetch'
+import winston from 'winston'
 
-const { BASE_URL, API_KEY } = require('../../constants')
+import { BASE_URL, API_KEY } from '../../constants.mjs'
 
 const sendPinCode = async (parent, { phone }) => {
   try {
@@ -20,4 +20,4 @@ const sendPinCode = async (parent, { phone }) => {
   }
 }
 
-module.exports = sendPinCode
+export default sendPinCode

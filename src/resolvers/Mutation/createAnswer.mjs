@@ -1,7 +1,7 @@
-const fetch = require('node-fetch')
-const winston = require('winston')
+import fetch from 'node-fetch'
+import winston from 'winston'
 
-const { BASE_URL } = require('../../constants')
+import { BASE_URL } from '../../constants.mjs'
 
 const createAnswer = async (
   parent,
@@ -27,4 +27,4 @@ const createAnswer = async (
   }
 }
 
-module.exports = createAnswer
+export default createAnswer
