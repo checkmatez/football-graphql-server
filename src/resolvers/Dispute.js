@@ -1,4 +1,4 @@
-module.exports = {
+const Dispute = {
   createdAt: ({ createdAt }) =>
     `${createdAt.substr(0, 10)}T${createdAt.substr(11)}Z`,
   updatedAt: ({ updatedAt }) =>
@@ -10,3 +10,5 @@ module.exports = {
   creator: ({ user }) => user,
   answers: ({ responses }) => responses || [],
 }
+
+module.exports = Dispute

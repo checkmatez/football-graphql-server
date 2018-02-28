@@ -4,7 +4,12 @@ type Query {
   "Получить спор по id."
   dispute(id: ID!): Dispute!
   disputes(pagination: Pagination!, creatorId: ID): [Dispute!]!
-  answers(pagination: Pagination!, creatorId: ID): [Answer!]!
+  answer(id: ID!): Answer!
+  answers(
+    pagination: Pagination!
+    creatorId: ID
+    states: [AnswerState!]
+  ): [Answer!]!
 }
 
 type Mutation {
