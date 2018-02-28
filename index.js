@@ -1,10 +1,11 @@
 const { GraphQLServer } = require('graphql-yoga')
+const { importSchema } = require('graphql-import')
 const winston = require('winston')
 
 const resolvers = require('./src/resolvers')
 
 const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
+  typeDefs: importSchema('./src/schema/root.graphql'),
   resolvers,
   context: ({ request }) => ({ accessToken: request.headers.authorization })
 })

@@ -1,0 +1,44 @@
+enum AnswerState {
+  WAITING
+  ACTIVE
+  WIN
+  LOSS
+}
+
+enum DisputeConfirmation {
+  WAITING
+  WIN
+  LOSS
+}
+
+enum DisputeResult {
+  WAITING
+  MODERATION
+  WIN
+  LOSS
+  CANCELLED
+}
+
+enum DisputeState {
+  ACTIVE
+  FINISHED
+  LOCKED
+  ARCHIVED
+  DELETED
+}
+
+enum League {
+  RFPL
+  FNL
+}
+
+enum MatchState {
+  WAITING
+  ACTIVE
+  FINISHED
+}
+
+enum UserState {
+  ACTIVE
+  DISABLED
+}

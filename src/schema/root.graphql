@@ -1,0 +1,48 @@
+# import * from 'models.graphql'
+# import * from 'enums.graphql'
+# import * from 'inputs.graphql'
+
+# syntax for import can be found here: https://github.com/graphcool/graphql-import
+
+type Query {
+  "Информация о текущем авторизованном пользователе. Должен быть указан header 'Authorization' со значением - токеном доступа."
+  me: User!
+  "Получить спор по id."
+  dispute(id: ID!): Dispute!
+  disputes(pagination: Pagination!, creatorId: ID): [Dispute!]!
+  answer(id: ID!): Answer!
+  answers(
+    pagination: Pagination!
+    creatorId: ID
+    states: [AnswerState!]
+  ): [Answer!]!
+}
+
+type Mutation {
+  "Отправить ПИН код на указанный номер. Если пользователя с номером еще нет в базе, он будет создан."
+  sendPinCode(phone: String!): Int
+  "Подтвердить получение ранее отправленного ПИН кода и авторизоваться."
+  loginByPin(phone: String!, pinCode: Int!): AuthPayload
+  "Создать спор."
+  createDispute(matchId: ID!, text: String!, amount: Int!): Dispute
+  "Принять решение об исходе своего (походу и чужого тоже =)) спора."
+  confirmDispute(id: ID!, confirmation: DisputeConfirmation!): Dispute
+  "Удалить спор."
+  deleteDispute(id: ID!): Dispute
+  "Создать ответ на спор."
+  createAnswer(disputeId: ID!, comment: String!, amount: Int!): Answer
+  "Принять решение об исходе своего ответа на спор."
+  confirmAnswer(id: ID!, confirmation: AnswerState!): Answer
+}
+
+"Вспомогательный тип для возврата данных авторизации."
+type AuthPayload {
+  accessToken: String!
+  currentUser: User!
+}
+
+scalar DateTime
+
+scalar Date
+
+scalar Time

@@ -1,0 +1,64 @@
+"Тип Ответ. Моделирует ответную ставку пользователя на спор другого пользователя."
+type Answer {
+  id: ID!
+  createdAt: DateTime!
+  dispute: Dispute!
+  creator: User!
+  state: AnswerState!
+  amount: Int!
+  comment: String!
+  "Какая-то херня с нашего сервера. Нам скорее всего не нужно, но пока оставил это поле."
+  side: Int!
+}
+
+"Тип Спор. Моделирует спор пользователя об исходе некоторого события в рамках конкретного матча."
+type Dispute {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  creator: User!
+  state: DisputeState!
+  result: DisputeResult
+  confirmation: DisputeConfirmation
+  amount: Int!
+  text: String!
+  match: Match!
+  answers: [Answer!]!
+}
+
+type Match {
+  id: ID
+  round: Int!
+  roundName: String
+  stadium: String
+  city: String
+  team1: Team!
+  team2: Team!
+  startedAt: DateTime
+  result: String!
+  state: MatchState!
+}
+
+type Team {
+  id: ID!
+  name: String!
+  city: String
+  stadium: String
+  logo: String
+  league: League!
+}
+
+"Тип Пользователь. Моделирует данные о конкретном пользователе системы."
+type User {
+  id: ID!
+  "При авторизации по телефону username это телефон. При авторизации через соцсети - это ник пользователя."
+  username: String
+  firstName: String!
+  lastName: String!
+  state: UserState!
+  phone: String
+  balance: Int
+  avatar: String
+  avatar100: String
+  avatar600: String
+}
