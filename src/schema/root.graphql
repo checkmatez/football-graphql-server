@@ -12,6 +12,7 @@ type Query {
   disputes(
     pagination: Pagination!
     creatorId: ID
+    matchId: ID
     states: [DisputeState!]
   ): [Dispute!]!
   answer(id: ID!): Answer!

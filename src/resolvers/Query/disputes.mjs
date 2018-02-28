@@ -6,13 +6,14 @@ import { BASE_URL } from '../../constants.mjs'
 
 const disputes = async (
   parent,
-  { pagination, creatorId, states },
+  { pagination, creatorId, matchId, states },
   { accessToken }
 ) => {
   const params = querystring.stringify({
     start: pagination.start,
     limit: pagination.limit,
     ...(creatorId && { userId: creatorId }),
+    ...(matchId && { matchId }),
     ...(states && { state: states.join(',').toLowerCase() })
   })
   const url = `${BASE_URL}/disputes?${params}`
