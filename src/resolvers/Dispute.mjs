@@ -3,12 +3,11 @@ import querystring from 'querystring'
 import winston from 'winston'
 
 import { BASE_URL } from '../constants.mjs'
+import { getSaneDate } from '../utils.mjs'
 
 const Dispute = {
-  createdAt: ({ createdAt }) =>
-    `${createdAt.substr(0, 10)}T${createdAt.substr(11)}Z`,
-  updatedAt: ({ updatedAt }) =>
-    `${updatedAt.substr(0, 10)}T${updatedAt.substr(11)}Z`,
+  createdAt: ({ createdAt }) => getSaneDate(createdAt),
+  updatedAt: ({ updatedAt }) => getSaneDate(updatedAt),
   state: ({ state }) => state.toUpperCase(),
   result: ({ result }) => (result ? result.toUpperCase() : null),
   confirmation: ({ confirmation }) =>
