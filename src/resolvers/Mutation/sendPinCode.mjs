@@ -1,13 +1,13 @@
 import fetch from 'node-fetch'
 import winston from 'winston'
 
-import { BASE_URL, API_KEY } from '../../constants.mjs'
+import { BASE_URL } from '../../constants.mjs'
 
 const sendPinCode = async (parent, { phone }) => {
   try {
     const response = await fetch(`${BASE_URL}/auth`, {
       method: 'POST',
-      body: JSON.stringify({ username: phone, key: API_KEY }),
+      body: JSON.stringify({ username: phone, key: process.env.AUTH_API_KEY }),
       headers: { 'Content-Type': 'application/json' }
     })
     const result = await response.json()

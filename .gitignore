@@ -21,3 +21,6 @@ jsconfig.json
 
 # Coverage directory used by tools like istanbul
 coverage
+
+# env
+.env*

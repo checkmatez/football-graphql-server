@@ -7,11 +7,10 @@
     "node": ">=8.5.0"
   },
   "scripts": {
-    "start": "node --experimental-modules index.mjs",
-    "dev": "nodemon --experimental-modules index.mjs --ext js,mjs,graphql",
+    "start": "node --experimental-modules -r dotenv/config index.mjs",
+    "dev": "nodemon --ext js,mjs,graphql -x node --experimental-modules -r dotenv/config index.mjs",
     "lint": "eslint src",
-    "format":
-      "prettier src/**/*.{js,mjs,json,css} --config ./.prettierrc --write"
+    "format": "prettier src/**/*.{js,mjs,json,css} --config ./.prettierrc --write"
   },
   "dependencies": {
     "graphql-import": "^0.4.5",
@@ -23,6 +22,7 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
+    "dotenv": "^5.0.1",
     "eslint": "^4.18.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.9.0",
