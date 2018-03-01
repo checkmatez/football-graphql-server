@@ -15,7 +15,6 @@ const confirmAnswer = async (parent, { id, confirmation }, { accessToken }) => {
     })
     const result = await response.json()
     if (result.error) {
-      winston.error(result.error.message, result)
       throw new Error(result.error.message || 'Server error')
     }
     return result.data

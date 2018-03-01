@@ -3,7 +3,11 @@ import winston from 'winston'
 
 import { BASE_URL } from '../../constants.mjs'
 
-const confirmDispute = async (parent, { id, confirmation }, { accessToken }) => {
+const confirmDispute = async (
+  parent,
+  { id, confirmation },
+  { accessToken }
+) => {
   try {
     const response = await fetch(`${BASE_URL}/confirm/dispute`, {
       method: 'POST',
@@ -15,11 +19,11 @@ const confirmDispute = async (parent, { id, confirmation }, { accessToken }) => 
     })
     const result = await response.json()
     if (result.error) {
-      winston.error(result.error.message, result)
       throw new Error(result.error.message || 'Server error')
     }
     return result.data
   } catch (error) {
+    winston.error(error)
     throw error
   }
 }
